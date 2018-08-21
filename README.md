@@ -1,4 +1,4 @@
-# Modus Create PHP API Development Assignment
+# Modus Create PHP API Development Assignment ![Build Status](https://api.travis-ci.org/ernestohs/safety-ratings.svg?branch=master)
 
 ## Introduction
 This is simple API in PHP that calls a "backend API" to get information about crash test ratings for vehicles.
