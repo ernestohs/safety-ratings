@@ -1,7 +1,8 @@
 # Modus Create PHP API Development Assignment
 
 ## Introduction
-This is simple API in PHP that calls a "backend API" to get information about crash test ratings for vehicles.
+This is simple API in PHP that calls a "backend API" to get information
+about crash test ratings for vehicles.
 
 The underlying API that is to be used here is the [NHTSA NCAP 5 Star Safety Ratings API](https://one.nhtsa.gov/webapi/Default.aspx?SafetyRatings/API/5).
 This requires no sign up / authentication.
@@ -306,7 +307,7 @@ vehicle was not tested, again you want to get the value of
 ```
 Here's an example response should return for
 Requirement 3 when testing with the 2015 Audi A3:
-```json
+```
 {
  Count: 4,
  Results: [
@@ -348,14 +349,14 @@ JSON request bodies and get meaninful JSON output from each:
 ```
 POST http://localhost:8080/vehicles
 ```
-```json
+```
 {
  "modelYear": 2015,
  "manufacturer": "Audi",
  "model": "A3"
 }
 ```
-```json
+```
 {
  "modelYear": 2015,
  "manufacturer": "Toyota",
@@ -365,7 +366,7 @@ POST http://localhost:8080/vehicles
 Note - the JSON body below is erroneous, and should not crash the
 application but should return an empty `Results` object and set
 `Count` to `0` in your response.
-```json
+```
 {
  "manufacturer": "Honda",
  "model": "Accord"
@@ -387,8 +388,6 @@ YEAR>/<MANUFACTURER>/<MODEL>` (should return the same output as
 Requirement 1)
 
 
-
-
 ## How to configure & run
 
 ### Dependencies
@@ -396,4 +395,28 @@ Requirement 1)
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [php](http://php.net/manual/en/install.php)
 - [composer](https://getcomposer.org/doc/00-intro.md)
+- [docker](https://docs.docker.com/install/) *Optional
+
+You need to follow these instructions, executing the following commands **under the project directory**:
+
+```shell
+$ mv .env.example .env
+$ composer install
+$ php artisan key:generate
+$ docker-compose up -d
+```
+
+### Unit tests
+
+The unit tests located in the `test` folder:
+
+```shell
+$ .vendor/phpunit/phpunit/phpunit
+```
+
+### API Documentation
+
+```shell
+$ composer run docs
+```
 

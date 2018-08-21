@@ -11,10 +11,33 @@
 |
 */
 
+/**
+ * @SWG\Info(title="SafetyRatings API", version="1.0")
+ */
+
+ /**
+ * @SWG\Get(
+ *     path="/api/v1/vehicles/{year}/{manufacturer}/{model}",
+ *     @SWG\Response(response="200", description="Query vehicles")
+ * )
+ */
 $router->get("vehicles/{year}/{manufacturer}/{model}", "VehicleController@getWithPathParams");
 
+/**
+ * @SWG\Get(
+ *     path="/api/v1/vehicles",
+ *     @SWG\Response(response="200", description="Add vehicles data")
+ * )
+ */
 $router->post("vehicles", "VehicleController@post");
 
+/**
+ * @SWG\Get(
+ *     path="/api/v1/",
+ *     @SWG\Response(response="200", description="Get API version")
+ * )
+ */
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
