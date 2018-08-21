@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller;
 use Ixudra\Curl\Facades\Curl;
+use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
@@ -11,14 +12,40 @@ class VehicleController extends Controller
 
     public function getWithPathParams($year, $manufacturer, $model)
     {
+        return $this->getVehicles($year, $manufacturer, $model);
+    }
+
+    protected function getVehicles($year, $manufacturer, $model)
+    {
         $fullUrl = $this->baseUrl.
             "/modelyear/$year".
             "/make/$manufacturer".
             "/model/$model?format=json";
 
-        $content = Curl::to($fullUrl)
+        $rawData = Curl::to($fullUrl)
             ->get();
 
-        dd($content);
+        $content = json_decode($rawData);
+
+        $output = [
+            "Count" => 0,
+            "Results" => []
+        ];
+
+        if (isset($content->Count)) {
+            $output["Count"] = $content->Count;
+        }
+
+        if (isset($content->Results)) {
+            foreach ($content->Results as $contentResult) {
+                $output["Results"][] = [
+                    "Description" => $contentResult->VehicleDescription,
+                    "VehicleId" => $contentResult->VehicleId,
+                ];
+            }
+        }
+
+        return response(json_encode($output))
+            ->header('Content-Type', 'application/json');
     }
 }

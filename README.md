@@ -16,7 +16,7 @@ GET http://localhost:8080/vehicles/<MODEL YEAR>/<MANUFACTURER>/<MODEL>
 The PHP application should query the NHTSA API and use
 the data received to respond with precisely the following JSON if
 there are results:
-```json
+```
 {
  Count: <NUMBER OF RESULTS>,
  Results: [
@@ -40,7 +40,7 @@ there are results:
 }
 ```
 or precisely this JSON if NHTSA's API returns no results:
-```json
+```
 {
  Count: 0,
  Results: []
@@ -77,7 +77,7 @@ A set of test values that will cause NHTSA to have no results is:
 * `<MANUFACTURER>`: Ford
 * `<MODEL>`: Crown Victoria
 Example output of the NHTSA API for the 2015 Audi A3 is:
-```json
+```
 {
  Count: 4,
  Message: "Results returned successfully",
@@ -114,7 +114,7 @@ endpoint:
 POST http://localhost:8080/vehicles
 ```
 Which, when called with an application/JSON body as follows:
-```json
+```
 {
  "modelYear": 2015,
  "manufacturer": "Audi",
@@ -145,7 +145,7 @@ but with an additional field for each car model. The new field is
 
 So your example response JSON from this endpoint should look precisely
 like this:
-```json
+```
 {
  Count: <NUMBER OF RESULTS>,
  Results: [
@@ -177,7 +177,7 @@ https://one.nhtsa.gov/webapi/api/SafetyRatings/modelyear/2015/make/Aud
 i/model/A3?format=json
 ```
 This will return 4 vehicle variants:
-```json
+```
 {
  Count: 4,
  Message: "Results returned successfully",
@@ -213,7 +213,7 @@ Where `<VehicleId>` is one of the vehicle IDs from the initial API
 response (so 9403, 9408, 9405, 9406 in the case of the 2015 Audi A3).
 The response from NHTSA looks like this (vehicle has a rating -- you
 need the value of `OverallRating`):
-```json
+```
 {
  Count: 1,
  Message: "Results returned successfully",
@@ -272,7 +272,7 @@ row.",
 Responses from NHTSA may also look like this in the case where the
 vehicle was not tested, again you want to get the value of
 `OverallRating`:
-```json
+```
 {
  Count: 1,
  Message: "Results returned successfully",
@@ -386,4 +386,14 @@ same output as Requirement 1)
 YEAR>/<MANUFACTURER>/<MODEL>` (should return the same output as
 Requirement 1)
 
+
+
+
+## How to configure & run
+
+### Dependencies
+
+- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [php](http://php.net/manual/en/install.php)
+- [composer](https://getcomposer.org/doc/00-intro.md)
 
