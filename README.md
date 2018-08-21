@@ -402,7 +402,6 @@ You need to follow these instructions, executing the following commands **under 
 ```shell
 $ mv .env.example .env
 $ composer install
-$ php artisan key:generate
 $ docker-compose up -d
 ```
 
@@ -411,12 +410,12 @@ $ docker-compose up -d
 The unit tests located in the `test` folder:
 
 ```shell
-$ .vendor/phpunit/phpunit/phpunit
+$ composer test
 ```
 
 ### API Documentation
 
 ```shell
-$ composer run docs
+$ composer docs
 ```
 
