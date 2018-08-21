@@ -10,9 +10,9 @@ class VehicleController extends Controller
 {
     protected $baseUrl = "https://one.nhtsa.gov/webapi/api/SafetyRatings";
 
-    public function getWithPathParams($year, $manufacturer, $model)
+    public function getWithPathParams(Request $request, $year, $manufacturer, $model)
     {
-        return $this->getVehicles($year, $manufacturer, $model);
+        return $this->getVehicles($request, $year, $manufacturer, $model);
     }
 
     public function post(Request $request)
@@ -22,13 +22,13 @@ class VehicleController extends Controller
             $year = $request->json()->get("modelYear");
             $manufacturer = $request->json()->get("manufacturer");
             $model = $request->json()->get("model");
-            return $this->getVehicles($year, $manufacturer, $model);
+            return $this->getVehicles($request, $year, $manufacturer, $model);
         } else {
-            return $this->getVehicles();
+            return $this->getVehicles($request);
         }
     }
 
-    protected function getVehicles($year = "", $manufacturer = "", $model = "")
+    protected function getVehicles(Request $request, $year = "", $manufacturer = "", $model = "")
     {
         $fullUrl = $this->baseUrl.
             "/modelyear/$year".
@@ -49,14 +49,38 @@ class VehicleController extends Controller
             $output["Count"] = $content->Count;
         }
 
+        $results = array();
+
         if (isset($content->Results)) {
             foreach ($content->Results as $contentResult) {
-                $output["Results"][] = [
+                $results[] = [
                     "Description" => $contentResult->VehicleDescription,
                     "VehicleId" => $contentResult->VehicleId,
                 ];
             }
         }
+
+        if ($request->get("withRating") == "true") {
+            foreach ($results as $key => $result) {
+                $fullVehicleUrl = $this->baseUrl.
+                    "/VehicleId/{$result['VehicleId']}?format=json";
+                
+                $rawVehicleData = Curl::to($fullVehicleUrl)
+                    ->get();
+
+                $vehicleContent = json_decode($rawVehicleData);
+                    
+                if (isset($vehicleContent->Results[0]->OverallRating)) {
+                    $rating = $vehicleContent->Results[0]->OverallRating;
+                } else {
+                    $rating = "Not Rated";
+                }
+                $result["CrashRating"] = $rating;
+                $results[$key] = $result;
+            }
+        }
+
+        $output["Results"] = $results;
 
         return response(json_encode($output))
             ->header('Content-Type', 'application/json');
