@@ -13,6 +13,8 @@
 
 $router->get("vehicles/{year}/{manufacturer}/{model}", "VehicleController@getWithPathParams");
 
+$router->post("vehicles", "VehicleController@post");
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });

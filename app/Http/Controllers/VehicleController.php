@@ -15,7 +15,20 @@ class VehicleController extends Controller
         return $this->getVehicles($year, $manufacturer, $model);
     }
 
-    protected function getVehicles($year, $manufacturer, $model)
+    public function post(Request $request)
+    {
+        if ($request->isJson()) {
+            $parameters = $request->json()->all();
+            $year = $request->json()->get("modelYear");
+            $manufacturer = $request->json()->get("manufacturer");
+            $model = $request->json()->get("model");
+            return $this->getVehicles($year, $manufacturer, $model);
+        } else {
+            return $this->getVehicles();
+        }
+    }
+
+    protected function getVehicles($year = "", $manufacturer = "", $model = "")
     {
         $fullUrl = $this->baseUrl.
             "/modelyear/$year".

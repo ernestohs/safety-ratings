@@ -27,8 +27,6 @@ $app->withFacades();
 
 // $app->withEloquent();
 
-class_alias('Ixudra\Curl\Facades\Curl', 'Curl');
-
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
