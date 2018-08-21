@@ -297,13 +297,15 @@ Here's an example response should return for Requirement 3 when testing with the
 - [docker](https://docs.docker.com/install/) *Optional
 
 ### Setup
-You need to follow these instructions, executing the following commands **under the project directory**:
+1. Copy/rename the `.env.example` file into `.env`
+2. Add a random string (commonly of length 32) in the `APP_KEY` entry inside `.env`
+3. You need to follow these instructions, executing the following commands **under the project directory**:
 
-```shell
-$ composer install
-$ docker-compose up -d
-```
-**Notes for *nix users*: in the project directory is necesary to execute this command `$ chown -R 1000:1000`
+    ```shell
+    $ composer install
+    $ docker-compose up -d
+    ```
+**Notes for * nix users**: in the project directory is necessary to execute this command `$ chown -R 1000:1000`
 
 ### Unit Tests
 
