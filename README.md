@@ -115,8 +115,7 @@ should respond with exactly the same JSON as your existing endpoint from Require
 ### Requirement 3
 When the endpoint:
 ```
-GET http://localhost:8080/vehicles/<MODEL
-YEAR>/<MANUFACTURER>/<MODEL>?withRating=true
+GET http://localhost:8080/vehicles/<MODEL YEAR>/<MANUFACTURER>/<MODEL>?withRating=true
 ```
 The PHP application shoud make multiple queries to the NHTSA API and return the same JSON specified in Requirements 1 and 2, but with an additional field for each car model. The new field is `CrashRating` and it will be a string field whose possible values are:
 
